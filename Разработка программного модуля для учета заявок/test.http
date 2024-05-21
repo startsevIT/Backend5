@@ -1,0 +1,33 @@
+﻿GET https://localhost:7282/orders
+
+###
+
+GET https://localhost:7282/orders/d499cc41-d58f-42a9-96b5-d5c885ee8765
+
+###
+
+POST https://localhost:7282/orders
+Content-Type: application/json
+
+{
+  "device": "телефон",
+  "problemType": "Сломался",
+  "description": "да",
+  "client": "Кирилл"
+}
+
+###
+
+PUT https://localhost:7282/orders/d499cc41-d58f-42a9-96b5-d5c885ee8765
+Content-Type: application/json
+
+{
+  "status": "выполнено",
+  "description": "хорошо",
+  "worker": "Роман",
+  "comment": "Еле как починил"
+}
+
+###
+
+GET https://localhost:7282/statistics
