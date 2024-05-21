@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Обновление</title>
+</head>
+<body>
+    <header>
+        <a href="orders.html">Заявки</a>
+        <a href="create.html">Создание</a>
+        <a href="update.html">Обновление</a>
+        <a href="statistics.html">Статистика</a>
+    </header>
+    <form>
+        <input id="id" type="text" placeholder="Id">
+        <select id="status">
+            <option value="выполнено">выполнено</option>
+            <option value="в ожидании">в ожидании</option>
+            <option value="в процессе">в процессе</option>
+        </select>
+        <input id="description" type="text" placeholder="Описание">
+        <input id="worker" type="text" placeholder="Работник">
+        <input id="comment" type="text" placeholder="Комментарий">
+        <input id="send" type="button" value="Обновление" onclick="UpdateOrder()">
+    </form>
+    <script>
+        async function UpdateOrder()
+        {
+            var id = document.getElementById("id").value; 
+            var status = document.getElementById("status").value; 
+            var description = document.getElementById("description").value; 
+            var worker = document.getElementById("worker").value; 
+            var comment = document.getElementById("comment").value;
+
+            var body = JSON.stringify({
+                status:status,
+                description:description,
+                worker:worker,
+                comment: comment
+            });
+
+            await fetch(`https://localhost:7282/orders/${id}`,{
+                method:"PUT",
+                headers: {"Content-Type" : "application/json"},
+                body: body
+            })
+        }
+    </script>
+</body>
+</html>

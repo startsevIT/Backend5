@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Заявки</title>
+</head>
+<body>
+    <header>
+        <a href="orders.html">Заявки</a>
+        <a href="create.html">Создание</a>
+        <a href="update.html">Обновление</a>
+        <a href="statistics.html">Статистика</a>
+    </header>
+    <table id="table">
+    </table>
+    <script>
+        var table = document.getElementById("table");
+        CreateTable();
+        async function CreateTable()
+        {
+            var args = [
+                "Id",
+                "Дата начала",
+                "Дата окончания",
+                "Оборудование",
+                "Тип проблемы",
+                "Описание",
+                "Клиент",
+                "Статус",
+                "Работник",
+                "Комментарий"
+            ];
+            table.append(Tr(args));
+            var response = await fetch("https://localhost:7282/orders", {method:"GET"});
+            var orders = await response.json();
+            orders.forEach(order => {
+                var orderArgs = [
+                    order.id,
+                    order.startDate.slice(0,10),
+                    order.endDate == null ? "нет данных" : order.endDate.slice(0,10),
+                    order.device,
+                    order.problemType,
+                    order.description,
+                    order.client,
+                    order.status,
+                    order.worker,
+                    order.comment];
+                table.append(Tr(orderArgs));
+            });
+
+        }
+        function Tr(array)
+        {
+            var tr = document.createElement("tr");
+            array.forEach(e => tr.append(Td(e)));
+            return tr;
+        }
+        function Td(text)
+        {
+            var td = document.createElement("td");
+            td.append(text);
+            return td;
+        }
+    </script>
+    <style>
+        td { border: solid 1px black; }
+    </style>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Создание</title>
+</head>
+<body>
+    <header>
+        <a href="orders.html">Заявки</a>
+        <a href="create.html">Создание</a>
+        <a href="update.html">Обновление</a>
+        <a href="statistics.html">Статистика</a>
+    </header>
+    <form>
+        <input id="device" type="text" placeholder="Оборудование">
+        <input id="problemType" type="text" placeholder="Тип проблемы">
+        <input id="description" type="text" placeholder="Описание">
+        <input id="client" type="text" placeholder="Клиент">
+        <input id="send" type="button" value="Создание" onclick="SendOrder()">
+    </form>
+    <script>      
+        async function SendOrder()
+        {
+            var device = document.getElementById("device").value; 
+            var problemType = document.getElementById("problemType").value; 
+            var description = document.getElementById("description").value; 
+            var client = document.getElementById("client").value; 
+
+            var body = JSON.stringify({
+                device:device,
+                problemType:problemType,
+                description:description,
+                client: client
+            });
+
+            await fetch("https://localhost:7282/orders",{
+                method:"POST",
+                headers: {"Content-Type" : "application/json"},
+                body: body
+            })
+        }
+    </script>
+</body>
+</html>
